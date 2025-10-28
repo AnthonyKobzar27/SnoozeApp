@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Dimensions} from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Dimensions, LayoutChangeEvent } from 'react-native';
 import { router } from 'expo-router';
 import { ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -7,7 +7,7 @@ import Svg, { Path, Line, Circle, Rect } from 'react-native-svg';
 
 // Mini Line Chart Component
 const MiniLineChart = ({ data, color = '#000', height = 60 }: { data: number[], color?: string, height?: number }) => {
-  const width = 200;
+  const width = 180;
   const padding = 4;
   const max = Math.max(...data);
   const min = Math.min(...data);
@@ -36,7 +36,7 @@ const MiniLineChart = ({ data, color = '#000', height = 60 }: { data: number[], 
 };
 
 const MiniLineChart2 = ({ data, color = '#000', height = 60 }: { data: number[], color?: string, height?: number }) => {
-  const width = 200;
+  const width = 180;
   const padding = 4;
   const max = Math.max(...data);
   const min = Math.min(...data);
@@ -111,7 +111,7 @@ export default function HomeScreen() {
               <View style={styles.metricRow}>
                 <View style={styles.metricLeft}>
                   <Text style={styles.statLabel}>SLEEP TODAY</Text>
-                  <Text style={styles.statValue}>7h</Text>
+                  <Text style={styles.statValue} adjustsFontSizeToFit numberOfLines={1}>7h</Text>
                 </View>
                 <View style={styles.chartContainer}>
                   <MiniLineChart data={sleepData} color="#000" height={60} />
@@ -133,7 +133,7 @@ export default function HomeScreen() {
               <View style={styles.metricRow}>
                 <View style={styles.metricLeft}>
                   <Text style={styles.statLabel}>TOTAL PROFIT</Text>
-                  <Text style={styles.statValue}>$25</Text>
+                  <Text style={styles.statValue} adjustsFontSizeToFit numberOfLines={1}>$25</Text>
                 </View>
                 <View style={styles.chartContainer}>
                 <MiniLineChart2 data={profitData} color="#000" height={60} />
@@ -239,6 +239,8 @@ const styles = StyleSheet.create({
   },
   metricLeft: {
     flex: 1,
+    minWidth: 100,
+    maxWidth: 150,
   },
   statLabel: {
     fontSize: 10,
@@ -252,6 +254,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontFamily: 'Inter_800ExtraBold',
     marginBottom: 4,
+    minHeight: 45,
   },
   statSubtext: {
     fontSize: 11,
@@ -259,9 +262,11 @@ const styles = StyleSheet.create({
     color: '#4CAF50',
   },
   chartContainer: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
-    marginLeft: 12,
+    marginLeft: 0,
+    maxWidth: 180,
+    overflow: 'hidden',
   },
   chartLabel: {
     fontSize: 8,
